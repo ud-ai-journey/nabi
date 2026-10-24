@@ -2,7 +2,7 @@
 // Where waitlist emails go: an endpoint that accepts a JSON POST (Formspree, Getform, Basin…). Empty = "opens soon".
 const WAITLIST_ENDPOINT = "";
 // The X profile, e.g. "https://x.com/nabiapp". Shows an X link in the footer when set.
-const X_URL = "";
+const X_URL = "https://x.com/udaikumardev";
 // ─────────────────────────────────────────────────────────────────────────
 
 const $ = (s, r = document) => r.querySelector(s);
