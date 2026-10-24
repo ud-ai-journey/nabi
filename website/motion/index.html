@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nabi — Convert anything with a flutter</title>
+<meta name="description" content="Nabi is a free, tiny butterfly that lives in your Mac's menu bar. Select or drag any file, press ⌃⌘, drop it on a wing: 60+ conversions and tools for photos, videos, PDFs and documents, entirely on your Mac.">
+<meta name="theme-color" content="#09070d">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nabi — Convert anything with a flutter">
+<meta property="og:description" content="Drag any file, press ⌃⌘, drop it on a wing. Photos, videos, PDFs and docs, converted entirely on your Mac.">
+<meta property="og:image" content="https://ud-ai-journey.github.io/nabi/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nabi — Convert anything with a flutter">
+<meta name="twitter:description" content="Drag any file, press ⌃⌘, drop it on a wing. Converted entirely on your Mac.">
+<meta name="twitter:image" content="https://ud-ai-journey.github.io/nabi/assets/og-image.png">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Anton&display=swap" rel="stylesheet">
+<link rel="preload" href="../assets/wings.png" as="image">
+<link rel="preload" href="../assets/body.png" as="image">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<canvas class="fx" id="fx" aria-hidden="true"></canvas>
+<div class="buddy" id="buddy" aria-hidden="true"><i class="wing l"></i><i class="wing r"></i><img src="../assets/body.png" alt=""></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><img src="../assets/mark.png" alt="">Nabi</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#demo">Try it</a><a href="#how">How</a><a href="#features">Features</a><a href="#everything">Everything</a><a href="#film">Film</a><a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="#download">Download</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="grid-lines" aria-hidden="true"></div>
+    <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div data-reveal><span class="pill"><b>Free</b> A tiny butterfly for your Mac</span></div>
+      <h1 id="hero-title">Convert anything<br>with <em class="grad">a flutter.</em></h1>
+      <p class="lead" data-reveal style="--d:.16s">Nabi lives in your menu bar. Drag any file, press <kbd>⌃</kbd> <kbd>⌘</kbd>, and drop it on a wing.
+        Photos, videos, PDFs and documents, converted right where they are, entirely on your Mac.</p>
+      <div class="hero-actions" data-reveal style="--d:.24s">
+        <div class="cta-row">
+          <a class="btn btn-primary btn-xl" href="https://github.com/ud-ai-journey/nabi/releases/latest/download/Nabi.dmg" data-download><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.18-1.53 2.65-.39 6.57 1.1 8.72.73 1.05 1.6 2.23 2.73 2.19 1.1-.04 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.4 1.2-2.46-.03-.01-2.3-.88-2.32-3.49zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.65-1.05 1.68-.92 2.67.97.08 1.96-.49 2.56-1.22z"/></svg>Download for Mac</a>
+          <a class="btn btn-ghost btn-xl" href="#film">Watch the film <span class="arrow">→</span></a>
+        </div>
+        <div class="meta"><span>Free</span><span>macOS 14+</span><span>Apple Silicon</span><span>Nothing uploaded</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive demo -->
+  <section class="demo" id="demo">
+    <div class="wrap">
+      <div class="stage-wrap" data-reveal>
+        <div class="stage-frame">
+          <div class="stage-viewport">
+            <div class="stage" id="stage" aria-label="Interactive demo: drag a file and drop it on the butterfly">
+              <div class="menubar">
+                <b>Finder</b><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span>
+                <div class="right"><img class="nabi-icon" id="menu-icon" src="../assets/mark.png" alt=""><span class="battery"></span><span id="clock">Tue 9:41</span></div>
+              </div>
+              <div class="finder">
+                <div class="finder-bar"><i></i><i></i><i></i><span>Desktop</span></div>
+                <div class="files" id="files"></div>
+              </div>
+              <div class="hint" id="hint"><span class="dot"></span><span id="hint-text">Drag a file, press <kbd id="k-ctrl">⌃</kbd> <kbd id="k-cmd">⌘</kbd> — or just tap one</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- How it works: pinned, played by scrolling -->
+  <section class="story" id="how">
+    <div class="story-pin">
+      <div class="wrap story-grid">
+        <div class="story-text">
+          <span class="label">How it works</span>
+          <div class="story-steps">
+            <div class="story-step on"><b>01</b><h3>Select any file.</h3><p>In Finder, Photos, an open document. Or just start dragging it.</p></div>
+            <div class="story-step"><b>02</b><h3>Press <kbd>⌃</kbd><kbd>⌘</kbd>.</h3><p>Nabi flutters open right under your cursor.</p></div>
+            <div class="story-step"><b>03</b><h3>Drop it on a wing.</h3><p>Only what fits that file. Favourites on the wings.</p></div>
+            <div class="story-step"><b>04</b><h3>Done <span class="heart">♡</span></h3><p>Converted on your Mac, right where it was.</p></div>
+          </div>
+          <div class="story-bar"><i id="story-bar"></i></div>
+        </div>
+        <div class="story-visual" id="story-visual">
+          <div class="sv-window">
+            <div class="sv-bar"><i></i><i></i><i></i><span>Downloads</span></div>
+            <div class="sv-files">
+              <div class="sv-file" id="sv-file"><div class="doc photo"><em>HEIC</em></div><span>trip.heic</span></div>
+              <div class="sv-file"><div class="doc video"><em>MOV</em></div><span>vlog.mov</span></div>
+              <div class="sv-file sv-result" id="sv-result"><div class="doc photo"><em>JPG</em></div><span>trip.jpg</span></div>
+            </div>
+          </div>
+          <div class="sv-keys" id="sv-keys"><kbd>⌃</kbd><kbd>⌘</kbd></div>
+          <div class="sv-fly" id="sv-fly">
+            <div class="sv-bubble" id="sv-bubble">trip.heic</div>
+            <i class="wing l"></i><i class="wing r"></i>
+            <img class="sv-body" src="../assets/body.png" alt="">
+            <b class="sv-spot up" style="left:19.5%;top:34.5%" id="sv-jpg">JPG</b>
+            <b class="sv-spot up" style="left:80.5%;top:34.5%">PDF</b>
+            <b class="sv-spot" style="left:33%;top:75.5%">PNG</b>
+            <b class="sv-spot" style="left:67%;top:75.5%">Cutout</b>
+            <svg class="sv-ring" id="sv-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><circle class="p" cx="50" cy="50" r="44" id="sv-ring-p"/></svg>
+          </div>
+          <div class="sv-ghost" id="sv-ghost"><div class="doc photo"><em>HEIC</em></div></div>
+          <svg class="sv-cursor" id="sv-cursor" viewBox="0 0 24 32"><path d="M2 2v24l6.5-6 4 9 3.6-1.6-4-8.9H21z" fill="#fff" stroke="#120d17" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="label">Small butterfly, big talents</span>
+        <h2>Everything you'd open <em>five apps</em> for.</h2>
+        <p class="lead">One gesture for every everyday conversion, and a few bits of magic you won't find in a converter.</p>
+      </div>
+
+      <div class="bento">
+        <article class="card span-4" data-reveal>
+          <span class="label">Remove backgrounds</span>
+          <h3>One drop. A clean cut-out.</h3>
+          <p>Nabi lifts the person, pet or object onto a transparent background with Apple's on-device vision.</p>
+          <div class="ba" id="ba">
+            <img src="../assets/cutout-after.jpg" alt="Butterfly cut out on a transparent background">
+            <img class="before" src="../assets/cutout-before.jpg" alt="Butterfly on a garden background">
+            <span class="tag l">Before</span><span class="tag r">After</span>
+            <div class="handle"></div>
+          </div>
+        </article>
+
+        <article class="card span-2" data-reveal style="--d:.06s">
+          <span class="label">Smaller</span>
+          <h3>Too big to send? Not anymore.</h3>
+          <p>Videos, photos and PDFs, shrunk to fit email and chat.</p>
+          <div class="meter" id="meter">
+            <div class="num"><span id="meter-num">48.2</span><small>MB</small></div>
+            <div class="bar"><i id="meter-bar"></i></div>
+            <div class="files-line"><span>vlog.mov</span><span>→ vlog small.mp4</span></div>
+          </div>
+          <ul class="sizes">
+            <li><span>iPhone photo</span><b>4.8 MB → 0.9 MB</b></li>
+            <li><span>Scanned PDF</span><b>18 MB → 3.2 MB</b></li>
+            <li><span>Screen recording</span><b>220 MB → 22 MB</b></li>
+          </ul>
+        </article>
+
+        <article class="card span-3" data-reveal>
+          <span class="label">Text behind you</span>
+          <h3>The trend, in one second.</h3>
+          <p>Type something. It slides in behind the subject.</p>
+          <div class="tb" id="tb">
+            <img src="../assets/cutout-before.jpg" alt="">
+            <div class="words chunky" id="tb-words">NABI</div>
+            <img src="../assets/subject.png" alt="Words placed behind the butterfly">
+          </div>
+          <div class="tb-controls">
+            <input id="tb-input" value="NABI" maxlength="16" aria-label="Words to place behind the butterfly">
+            <button class="chip-btn on" data-style="chunky">Chunky</button>
+            <button class="chip-btn" data-style="bold">Bold</button>
+            <button class="chip-btn" data-style="script">Script</button>
+            <button class="chip-btn" data-style="outline">Outline</button>
+          </div>
+        </article>
+
+        <article class="card span-3" data-reveal style="--d:.06s">
+          <span class="label">Documents</span>
+          <h3>Markdown, Word &amp; Pages → beautiful PDFs.</h3>
+          <p>Styled, paginated, with tables and code. Word, RTF, text and HTML too.</p>
+          <div class="md" id="md">
+            <pre id="md-src"></pre>
+            <div class="page" id="md-page">
+              <h4 class="hidden" data-at="1">Release notes ♡</h4>
+              <p class="hidden" data-at="3">Nabi is a <b>cute</b> converter for your Mac.</p>
+              <h5 class="hidden" data-at="5">What's new</h5>
+              <ul class="hidden" data-at="7"><li>Background cut-outs</li><li>Text behind you</li><li><code>⌃⌘</code> anywhere</li></ul>
+              <table class="hidden" data-at="11"><tr><th>From</th><th>To</th></tr><tr><td>HEIC</td><td>JPG</td></tr><tr><td>MOV</td><td>GIF</td></tr></table>
+            </div>
+          </div>
+        </article>
+
+        <article class="card span-2" data-reveal>
+          <span class="label">Copy text</span>
+          <h3>Read any picture.</h3>
+          <p>Screenshots and photos become text you can paste.</p>
+          <div class="scan"><b>Shopping list ♡</b><br>Strawberries — 2 boxes<br>Oat milk · Stickers<br>Total: $18.40</div>
+          <div class="ocr" id="ocr"></div>
+        </article>
+
+        <article class="card span-2" data-reveal style="--d:.06s">
+          <span class="label">Combine</span>
+          <h3>Many files, one PDF.</h3>
+          <p>Photos, PDFs and docs merged in the order you picked them.</p>
+          <div class="stack" id="stack"><div class="sheet"></div><div class="sheet"></div><div class="sheet"></div></div>
+        </article>
+
+        <article class="card span-2 privacy-card" data-reveal style="--d:.12s">
+          <span class="label">Private by design</span>
+          <h3>Your files never leave your Mac.</h3>
+          <div class="zero">0 bytes<small>uploaded. Ever.</small></div>
+          <ul class="ticks"><li>No accounts</li><li>No tracking</li><li>Works on a plane</li></ul>
+        </article>
+
+        <article class="card span-6" data-reveal>
+          <span class="label">Formats</span>
+          <h3>Photos, video, audio, PDFs and documents.</h3>
+          <div class="marquee" aria-label="Supported formats">
+            <div class="row" id="row-a"></div>
+            <div class="row" id="row-b"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- A band of conversions that moves with your scroll -->
+  <section class="band" aria-label="Some of the conversions">
+    <div class="band-row" id="band-a"></div>
+    <div class="band-row alt" id="band-b"></div>
+  </section>
+
+  <!-- Everything -->
+  <section id="everything" style="padding-top:40px">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="label">The whole butterfly</span>
+        <h2><span class="count" data-count="60">60</span>+ things, <em>one shortcut.</em></h2>
+        <p class="lead">Nabi only shows what fits the file you picked, so the wings stay simple. Here's everything that's in there.</p>
+      </div>
+      <div class="catalog">
+        <article class="cat" data-reveal>
+          <div class="cat-head"><i class="ic pink"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5L5 20"/></svg></i><h3>Photos</h3></div>
+          <ul>
+            <li><b>Any format</b><span>JPG, PNG, HEIC, WebP, TIFF, GIF, BMP or PDF</span></li>
+            <li><b>Cutout</b><span>Removes the background, transparent PNG</span></li>
+            <li><b>Text behind</b><span>Big words tucked behind the subject</span></li>
+            <li><b>Beautify</b><span>Screenshots on a soft gradient, ready to post</span></li>
+            <li><b>Crop · Rotate · Flip · Resize</b><span>Square, 4:5, 9:16, 16:9, ½ size, 1080px</span></li>
+            <li><b>Watermark</b><span>Your name in the corner, centre or tiled</span></li>
+            <li><b>Palette · Read QR · Text</b><span>Colours, links and words pulled out of a picture</span></li>
+          </ul>
+        </article>
+        <article class="cat" data-reveal style="--d:.05s">
+          <div class="cat-head"><i class="ic red"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></i><h3>PDFs</h3></div>
+          <ul>
+            <li><b>Word &amp; Pages</b><span>Edit any PDF: headings, lists and tables come back</span></li>
+            <li><b>Searchable</b><span>Scans you can ⌘F, copy and find in Spotlight</span></li>
+            <li><b>Password</b><span>Lock a PDF, or unlock one you have the password for</span></li>
+            <li><b>Split · Pick pages</b><span>One file per page, or just 2–4, 7</span></li>
+            <li><b>Pictures &amp; text</b><span>Every page as JPG or PNG, or plain text</span></li>
+            <li><b>Watermark · Smaller</b><span>Stamped on every page; squeezed for email</span></li>
+          </ul>
+        </article>
+        <article class="cat" data-reveal style="--d:.1s">
+          <div class="cat-head"><i class="ic purple"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="3"/><path d="m17 10 4-2.5v9L17 14"/></svg></i><h3>Video &amp; audio</h3></div>
+          <ul>
+            <li><b>Any format</b><span>MP4, MOV, HEVC, GIF, WebM, MKV, MP3, M4A, WAV, FLAC</span></li>
+            <li><b>Auto subtitles</b><span>A timed .srt, or captions burned into the video</span></li>
+            <li><b>9:16 for Reels</b><span>Vertical, keeping the whole picture</span></li>
+            <li><b>Trim</b><span>QuickTime's trim bar, cut instantly</span></li>
+            <li><b>2× speed · Slow-mo · Rotate</b><span>Voices stay natural</span></li>
+            <li><b>Smaller</b><span>Under ~24 MB for WhatsApp and email</span></li>
+          </ul>
+        </article>
+        <article class="cat" data-reveal>
+          <div class="cat-head"><i class="ic teal"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></i><h3>Privacy</h3></div>
+          <ul>
+            <li><b>Blur</b><span>Faces, emails, phone numbers, addresses and cards, found for you</span></li>
+            <li><b>Redact</b><span>Black boxes in PDFs that can't be copied out</span></li>
+            <li><b>Clean</b><span>Strips hidden location, camera and dates</span></li>
+          </ul>
+        </article>
+        <article class="cat" data-reveal style="--d:.05s">
+          <div class="cat-head"><i class="ic blue"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h3"/></svg></i><h3>Documents</h3></div>
+          <ul>
+            <li><b>To PDF</b><span>Markdown, Word, Pages, text and HTML, beautifully paged</span></li>
+            <li><b>Between formats</b><span>Word, Markdown, HTML, RTF, ODT, EPUB</span></li>
+            <li><b>1 PDF</b><span>Many photos, PDFs and docs merged in order</span></li>
+            <li><b>QR code</b><span>From a link or any text file</span></li>
+          </ul>
+        </article>
+        <article class="cat" data-reveal style="--d:.1s">
+          <div class="cat-head"><i class="ic gold"><svg viewBox="0 0 24 24"><path d="M13 3 4 14h7l-1 7 9-11h-7z"/></svg></i><h3>Little luxuries</h3></div>
+          <ul>
+            <li><b>Type to find</b><span>Start typing “ocr” or “lock”, press ⏎</span></li>
+            <li><b>Copy · AirDrop · Show</b><span>Right from the butterfly when it's done</span></li>
+            <li><b>Works everywhere</b><span>Finder, Photos, open documents, the clipboard, right-click</span></li>
+            <li><b>Watch folders</b><span>New files convert themselves</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Everywhere -->
+  <section id="everywhere" style="padding-top:40px">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="label">Wherever you are</span>
+        <h2>Press <kbd>⌃</kbd><kbd>⌘</kbd>.<br>Nabi knows what you <em>mean.</em></h2>
+      </div>
+      <div class="places" data-reveal>
+        <div class="place"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><b>Finder</b><span>Whatever you've selected.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5L5 20"/></svg><b>Photos</b><span>The photos you've picked, as originals.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><b>Open documents</b><span>The file in Preview, QuickTime or TextEdit.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/></svg><b>Clipboard</b><span>Anything you've copied, even an image.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.5a6 6 0 0 1-5-2.7L4 15a1.5 1.5 0 0 1 2.5-1.6L9 16"/></svg><b>Drag &amp; drop</b><span>From Mail, Safari, Photos, any app.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><path d="M4 4l7 17 2.5-7.5L21 11z"/></svg><b>Right-click</b><span>"Convert with Nabi" in Finder.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9.5 13.5a2.5 2.5 0 0 1 4.3-1.7M14.5 14.5a2.5 2.5 0 0 1-4.3 1.7"/></svg><b>Watch folders</b><span>New files convert themselves.</span></div>
+        <div class="place"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>In the background</b><span>Long jobs keep going; a chime when done.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Film -->
+  <section id="film" style="padding-top:40px">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="label">The film</span>
+        <h2>One minute of <em>flutter.</em></h2>
+      </div>
+      <div class="film-frame" data-reveal>
+        <div class="film" id="film-player">
+          <video id="film-video" src="../assets/nabi-launch.mp4" poster="../assets/video-poster.jpg" playsinline preload="metadata"></video>
+          <button class="play" id="play" aria-label="Play the film"><span><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>Watch the film</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:40px">
+    <div class="wrap">
+      <div class="section-head center" data-reveal><span class="label">Questions</span><h2>Good to know.</h2></div>
+      <div class="faq" data-reveal>
+        <details><summary>Is Nabi really free?<i></i></summary><p>Yes. No account, no ads, no subscription. Download it, drag it into Applications, and it's yours.</p></details>
+        <details><summary>macOS says it can't check Nabi. Is that safe?<i></i></summary><p>Nabi isn't from the App Store yet, so the first time you open it macOS asks you to confirm. Open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>. You only do this once.</p></details>
+        <details><summary>Which Macs does it run on?<i></i></summary><p>Macs with Apple Silicon on macOS 14 Sonoma or later.</p></details>
+        <details><summary>Does Nabi upload my files?<i></i></summary><p>Never. Every conversion happens on your Mac with Apple's own frameworks, and Nabi works without an internet connection.</p></details>
+        <details><summary>Why does it ask for Accessibility?<i></i></summary><p>That's what lets Nabi notice ⌃⌘ and see which file you've selected or are dragging. Nabi never reads what you type.</p></details>
+        <details><summary>Do I need anything else installed?<i></i></summary><p>No. Pages documents go through Apple's free Pages app, and a handful of extra video and audio formats (WebM, MKV, burned-in captions, 9:16) use a small optional add-on Nabi installs for you.</p></details>
+        <details><summary>Why a butterfly?<i></i></summary><p><i>Nabi</i> (나비) is Korean for butterfly. Butterflies are all about transformation, and so is Nabi. It also flaps its wings while it works, which we consider essential.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="cta" id="download">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="wrap" style="position:relative">
+      <img class="mark" src="../assets/mark.png" alt="" data-reveal>
+      <h2 data-reveal>Your files deserve better<br>than <em class="grad">upload sites.</em></h2>
+      <p class="lead" data-reveal style="--d:.08s">Nabi is free. Download it, and the butterfly is one&nbsp;⌃⌘&nbsp;away.</p>
+      <div class="hero-actions" data-reveal style="--d:.16s">
+        <a class="btn btn-primary btn-xl" href="https://github.com/ud-ai-journey/nabi/releases/latest/download/Nabi.dmg" data-download><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.18-1.53 2.65-.39 6.57 1.1 8.72.73 1.05 1.6 2.23 2.73 2.19 1.1-.04 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.4 1.2-2.46-.03-.01-2.3-.88-2.32-3.49zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.65-1.05 1.68-.92 2.67.97.08 1.96-.49 2.56-1.22z"/></svg>Download Nabi for Mac</a>
+        <div class="meta"><span>Free</span><span>macOS 14 Sonoma or later</span><span>Apple Silicon</span></div>
+      </div>
+      <ol class="steps" data-reveal style="--d:.24s">
+        <li><b>1</b><div><h3>Open the download</h3><p>Drag the butterfly into your Applications folder.</p></div></li>
+        <li><b>2</b><div><h3>Say hello once</h3><p>macOS asks you to confirm apps from outside the App Store: <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></div></li>
+        <li><b>3</b><div><h3>Allow Accessibility</h3><p>So Nabi can hear ⌃⌘. Then select any file and press it.</p></div></li>
+      </ol>
+      <p class="fine" data-reveal>All versions and notes on <a href="https://github.com/ud-ai-journey/nabi/releases">GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><img src="../assets/mark.png" alt="">Nabi</a>
+    <span>Made on a Mac, with care. © 2026</span>
+    <nav><a href="#features">Features</a><a href="#faq">FAQ</a><a href="#download">Download</a><a href="https://github.com/ud-ai-journey/nabi">GitHub</a><a data-x-link href="#" hidden>X</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="main.js"></script>
+<script src="motion.js"></script>
+</body>
+</html>
