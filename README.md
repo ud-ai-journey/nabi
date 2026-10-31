@@ -38,7 +38,10 @@ Then select any file and press ⌃⌘.
 - **Photos:** remove backgrounds, text behind, beautify screenshots, crop, resize, watermark, palette, read QR codes
 - **Privacy:** blur private info, redact PDFs, strip hidden location and camera data
 - **Everywhere:** Finder, Photos, open documents, the clipboard, drag & drop, right-click, watch folders
-- **Little luxuries:** type to find any option, and Copy · AirDrop · Show right from the butterfly
+- **Make it fit:** any photo, PDF, video or audio file under 20 MB for email, 10 MB for Discord, or any size you type
+- **Live preview:** hover a spot (or drag over it) to see the result and its exact size before converting
+- **Little luxuries:** your favourite spots move to the top wings, type to find any option, Copy · AirDrop · Show ·
+  Undo right from the butterfly, and a Settings window for the shortcut and where results go
 
 Everything runs on your Mac. No uploads, no account, no ads.
 
